@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Funniest Roulette</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb);
+            background-size: 400% 400%;
+            animation: gradientBG 8s ease infinite;
+            text-align: center;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 50px;
+            position: relative;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        h1 {
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            animation: pulse 3s infinite;
+            margin-top: 1rem;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        .roleta {
+            margin: 4rem auto 2rem auto;
+            width: 300px;
+            height: 300px;
+            border: 10px solid #333;
+            border-radius: 50%;
+            position: relative;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            animation: spinShadow 1s infinite alternate;
+        }
+
+        @keyframes spinShadow {
+            from { box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); }
+            to { box-shadow: 0 0 25px rgba(255, 255, 255, 0.7); }
+        }
+
+        .setor {
+            width: 50%;
+            height: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform-origin: 0% 0%;
+            background-color: #4CAF50;
+            clip-path: polygon(100% 0, 100% 100%, 0 100%);
+        }
+        #setor1 { transform: rotate(0deg); background-color: #FF5733; }
+        #setor2 { transform: rotate(60deg); background-color: #33B5FF; }
+        #setor3 { transform: rotate(120deg); background-color: #FFC300; }
+        #setor4 { transform: rotate(180deg); background-color: #75FF33; }
+        #setor5 { transform: rotate(240deg); background-color: #FF33F0; }
+        #setor6 { transform: rotate(300deg); background-color: #FF8C00; }
+
+        .botao-girar {
+            margin: 2rem auto;
+            padding: 1rem 2rem;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            animation: bounce 2s infinite;
+        }
+        .botao-girar:hover {
+            background-color: #45a049;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .resultado {
+            margin-top: 2rem;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: scale(0.8);
+            animation: showResult 0.8s ease-out forwards;
+        }
+
+        @keyframes showResult {
+            0% { opacity: 0; transform: scale(0.8); }
+            50% { opacity: 0.5; transform: scale(1.1); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .confetes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .confete {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            animation: cair 4s linear infinite;
+        }
+
+        @keyframes cair {
+            0% {
+                transform: translateY(-100%) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Animações laterais */
+        .lado {
+            position: absolute;
+            top: 50%;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            animation: moveLado 5s linear infinite;
+        }
+
+        .lado-esquerdo {
+            left: -100px;
+            animation: moveLeft 5s linear infinite;
+        }
+
+        .lado-direito {
+            right: -100px;
+            animation: moveRight 5s linear infinite;
+        }
+
+        @keyframes moveLeft {
+            0% { transform: translateX(0); opacity: 1; }
+            50% { transform: translateX(300px); opacity: 0.5; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes moveRight {
+            0% { transform: translateX(0); opacity: 1; }
+            50% { transform: translateX(-300px); opacity: 0.5; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+    </style>
+</head>
+<body>
+    <h1>The Funniest Roulette</h1>
+    <main>
+        <div class="roleta" id="roleta">
+            <div class="setor" id="setor1"></div>
+            <div class="setor" id="setor2"></div>
+            <div class="setor" id="setor3"></div>
+            <div class="setor" id="setor4"></div>
+            <div class="setor" id="setor5"></div>
+            <div class="setor" id="setor6"></div>
+        </div>
+        <button class="botao-girar" onclick="girarRoleta()">Girar</button>
+        <div class="resultado" id="resultado">Clique no botão para começar!</div>
+    </main>
+
+    <div class="confetes" id="confetes"></div>
+
+    <!-- Música com opção de controle -->
+    <button onclick="toggleMusic()">Ligar/Desligar Música</button>
+    <audio id="backgroundMusic" loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-happyrock.mp3" type="audio/mpeg">
+        Seu navegador não suporta o elemento de áudio.
+    </audio>
+
+    <div class="lado lado-esquerdo"></div>
+    <div class="lado lado-direito"></div>
+
+    <script>
+        const desafios = [
+            "Dança por 10 segundos!",
+            "Canta por 15 segundos!",
+            "Faz 10 flexões!",
+            "Conta uma piada!",
+            "Faz mímica!",
+            "Escolhe alguém para ir na tua vez!",
+            "Faz uma pose engraçada!",
+            "Imita um animal por 15 segundos!",
+            "Pule num pé só por 20 segundos!",
+            "Faz 5 desafios seguidos!"
+        ];
+
+        function criarConfetes() {
+            const confetes = document.getElementById("confetes");
+            for (let i = 0; i < 50; i++) {
+                const confete = document.createElement("div");
+                confete.classList.add("confete");
+                confete.style.left = Math.random() * 100 + "%";
+                confete.style.animationDelay = Math.random() * 2 + "s";
+                confete.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 70%)`;
+                confetes.appendChild(confete);
+            }
+            setTimeout(() => {
+                confetes.innerHTML = "";
+            }, 4000);
+        }
+
+        function girarRoleta() {
+            const roleta = document.getElementById('roleta');
+            const resultado = document.getElementById('resultado');
+
+            roleta.style.transition = "none";
+            roleta.style.transform = "rotate(0deg)";
+
+            setTimeout(() => {
+                const angulo = Math.floor(Math.random() * 360) + 2160;
+                roleta.style.transition = "transform 5s ease-out";
+                roleta.style.transform = `rotate(${angulo}deg)`;
+
+                setTimeout(() => {
+                    const posicaoFinal = (angulo % 360) / 60;
+                    const desafioIndex = Math.floor(posicaoFinal);
+                    resultado.textContent = desafios[desafioIndex];
+                    resultado.style.animation = "none";
+                    setTimeout(() => {
+                        resultado.style.animation = "showResult 0.8s ease-out forwards";
+                    }, 10);
+                    criarConfetes();
+                }, 5000);
+            }, 50);
+        }
+
+        function toggleMusic() {
+            const music = document.getElementById("backgroundMusic");
+            if (music.paused) {
+                music.play();
+            } else {
+                music.pause();
+            }
+        }
+    </script>
+</body>
+</html>
